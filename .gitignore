@@ -1,0 +1,4 @@
+dbsqlite3
+__pycache__
+static
+local_settings.py
