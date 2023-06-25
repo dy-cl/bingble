@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Profile Picture{% endblock %}
+
+{% block content %}
+<style>
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.container h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.container form {
+  margin-top: 20px;
+}
+
+.container form button {
+  display: inline-block;
+  margin-top: 10px;
+  margin-right: 10px;
+  color: #333;
+  text-decoration: none;
+  border: 1px solid #333;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.container form button:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+.container a {
+  display: inline-block;
+  margin-top: 10px;
+  margin-right: 10px;
+  color: #333;
+  text-decoration: none;
+  border: 1px solid #333;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.container a:hover {
+  background-color: #333;
+  color: #fff;
+}
+</style>
+
+<div class="container">
+    <h2>Update Profile Picture</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+    
+    <a href="{% url 'profile' %}">Back to Profile</a> <!-- Add the back button -->
+</div>
+{% endblock %}

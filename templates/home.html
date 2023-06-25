@@ -1,29 +1,155 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Home{% endblock %}
 
 {% block content %}
-{% if user.is_authenticated %}
-  Hi {{ user.username }}!
-  <p><a href="{% url 'logout' %}">Log Out</a></p>
-  <p><a href="{% url 'password_reset' %}">Reset Password</a></p>
-  <a href="{% url 'create_post' %}">Create a Post</a>
+<style>
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
 
-  {% if posts %}
-    {% for post in posts %}
+.profile {
+  background-color: #f0f0f0;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.profile h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.profile img {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+  border-radius: 50%;
+}
+
+.profile a {
+  /* Existing styles */
+  display: inline-block;
+  margin-right: 10px;
+  margin-top: 10px;
+  color: #333;
+  text-decoration: none;
+  border: 1px solid #333; /* Added border */
+  padding: 5px 10px; /* Adjusted padding */
+  border-radius: 4px; /* Added border radius */
+  transition: background-color 0.3s; /* Added transition */
+}
+
+.profile a:hover {
+  background-color: #333; /* Added hover background color */
+  color: #fff; /* Added hover text color */
+}
+
+.create-post {
+  margin-bottom: 20px;
+}
+
+.create-post a {
+  display: inline-block;
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.post {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.post h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.post p {
+  margin: 10px 0;
+}
+
+.post hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 20px 0;
+}
+
+.login-signup {
+  margin-top: 20px;
+}
+
+.login-signup p {
+  margin: 0;
+  color: #333;
+}
+
+.login-signup a {
+  /* Existing styles */
+  display: inline-block;
+  margin-top: 10px;
+  margin-right: 10px;
+  color: #333;
+  text-decoration: none;
+  border: 1px solid #333; /* Added border */
+  padding: 5px 10px; /* Adjusted padding */
+  border-radius: 4px; /* Added border radius */
+  transition: background-color 0.3s; /* Added transition */
+}
+
+.login-signup a:hover {
+  background-color: #333; /* Added hover background color */
+  color: #fff; /* Added hover text color */
+}
+</style>
+
+<div class="container">
+  {% if user.is_authenticated %}
+    <div class="profile">
+      <h2>Welcome to bingble, {{ user.username }}!</h2>
+      {% if user.profile.profile_picture %}
+        <img src="{{ profile_picture.url }}" alt="Profile Picture">
+      {% else %}
+        <img src="{% static 'default_pfp.jpg' %}" alt="Default Profile Picture">
+      {% endif %}
+      <a href="{% url 'profile' %}">Profile</a>
+      <a href="{% url 'logout' %}">Log Out</a>
+      <a href="{% url 'password_reset' %}">Reset Password</a>
+    </div>
+    <div class="create-post">
+      <a href="{% url 'create_post' %}">Create a Post</a>
+    </div>
+
+    {% if posts %}
+      {% for post in posts %}
+      <div class="post">
+        <p>{{ post.author }}</p>
         <h2>{{ post.title }}</h2>
         <p>{{ post.content }}</p>
-        <p>Author: {{ post.author }}</p>
         <hr>
-    {% endfor %}
-  {% else %}
+      </div>
+      {% endfor %}
+    {% else %}
       <p>No posts found.</p>
+    {% endif %}
+
+  {% else %}
+    <div class="login-signup">
+      <p>You are not logged in</p>
+      <a href="{% url 'login' %}">Log In</a>
+      <a href="{% url 'signup' %}">Sign Up</a>
+    </div>
   {% endif %}
-
-{% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'login' %}">Log In</a>
-  <a href="{% url 'signup' %}">Sign Up</a>
-{% endif %}
+</div>
 {% endblock %}
-

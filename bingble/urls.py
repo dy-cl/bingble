@@ -1,3 +1,6 @@
+from django.conf import settings
+from django.conf.urls.static import static
+
 """bingble URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -16,12 +19,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView
-from bingbleApp.views import create_post, home
+from bingbleApp.views import create_post, home, profile, update_profile_picture
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', home, name='home'),
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('', home, name='home'),
     path('create-post/', create_post, name='create_post'),
-]
+    path('profile/', profile, name='profile'),
+    path('profile/update_picture/', update_profile_picture, name='update_profile_picture'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

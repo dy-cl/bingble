@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<style>
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.profile {
+  background-color: #f0f0f0;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.profile h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.profile img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+  border-radius: 50%;
+}
+
+.profile a {
+  display: inline-block;
+  margin-top: 10px;
+  margin-right: 10px;
+  color: #333;
+  text-decoration: none;
+  border: 1px solid #333;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.profile a:hover {
+  background-color: #333;
+  color: #fff;
+}
+</style>
+
+<div class="container">
+    <div class="profile">
+      {% if profile_picture %}
+        <img src="{{ profile_picture.url }}" alt="Profile Picture">
+      {% else %}
+        <img src="{% static 'default_pfp.jpeg' %}" alt="Default Profile Picture">
+      {% endif %}
+      <a href="{% url 'update_profile_picture' %}">Update Profile Picture</a>
+      <a href="{% url 'home' %}">Back to Home</a>
+      <!-- Additional profile information here -->
+    </div>
+</div>
+{% endblock %}
