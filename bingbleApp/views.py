@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import PostForm, ProfilePictureForm
 from .models import Post
+from .models import CustomUser
 
 ########################################################################################################
 def create_post(request):
@@ -18,13 +19,21 @@ def create_post(request):
 def home(request):
     posts = posts = Post.objects.order_by('-timestamp')  # Fetch all posts from the database
 
-    user = request.user
-    profile_picture = user.profile_picture
+    author_ids = posts.values_list('author_id', flat=True)
+    authors = CustomUser.objects.filter(id__in=author_ids)
+
+    profile_pictures = {str(author.id): author.profile_picture for author in authors}
+    
+    user = request.user if request.user.is_authenticated else None
+    profile_picture = user.profile_picture if user and hasattr(user, 'profile_picture') else None
+
+    print(profile_pictures)
 
     context = {
         'posts': posts,
         'user': user,
         'profile_picture': profile_picture,
+        'profile_pictures': profile_pictures,
     }
 
     return render(request, 'home.html', context)

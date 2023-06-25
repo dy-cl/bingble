@@ -1,13 +1,82 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<h2>Log In</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Log In</button>
-</form>
-<p><a href="{% url 'password_reset' %}">Reset Password</a></p>
+<style>
+  .container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    display: block;
+    font-weight: bold;
+  }
+
+  .form-group input[type="text"],
+  .form-group input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .form-group .button,
+  .form-group .signup-button,
+  .form-group .reset-button,
+  .login-signup a {
+    display: inline-block;
+    margin-top: 10px;
+    margin-right: 10px;
+    color: #333;
+    text-decoration: none;
+    border: 1px solid #333;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+
+  .form-group .button:hover,
+  .form-group .signup-button:hover,
+  .form-group .reset-button:hover,
+  .login-signup a:hover {
+    background-color: #333;
+    color: #fff;
+  }
+</style>
+
+<div class="container">
+  <h2>Log In</h2>
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="id_username">Username:</label>
+      {{ form.username }}
+    </div>
+    <div class="form-group">
+      <label for="id_password">Password:</label>
+      {{ form.password }}
+    </div>
+    <div class="form-group">
+      <button type="submit" class="button">Log In</button>
+      <a href="{% url 'signup' %}" class="signup-button">Sign Up</a>
+      <a href="{% url 'password_reset' %}" class="reset-button">Reset Password</a>
+    </div>
+  </form>
+</div>
 {% endblock %}

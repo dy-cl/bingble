@@ -80,6 +80,13 @@
   margin: 10px 0;
 }
 
+.post img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
 .post hr {
   border: none;
   border-top: 1px solid #ccc;
@@ -118,11 +125,7 @@
   {% if user.is_authenticated %}
     <div class="profile">
       <h2>Welcome to bingble, {{ user.username }}!</h2>
-      {% if profile_picture %}
-        <img src="{{ profile_picture.url }}" alt="Profile Picture">
-      {% else %}
-        <img src="{% static 'default_pfp.jpeg' %}" alt="Default Profile Picture">
-      {% endif %}
+      <img src="{% if profile_picture %}{{ profile_picture.url }}{% else %}{% static 'default_pfp.jpeg' %}{% endif %}" alt="Profile Picture">
       <a href="{% url 'profile' %}">Profile</a>
       <a href="{% url 'logout' %}">Log Out</a>
       <a href="{% url 'password_reset' %}">Reset Password</a>
@@ -130,10 +133,15 @@
     <div class="create-post">
       <a href="{% url 'create_post' %}">Create a Post</a>
     </div>
-
+    
     {% if posts %}
       {% for post in posts %}
       <div class="post">
+        {% if post.author.profile_picture %}
+          <img src="{{ post.author.profile_picture.url }}" alt="Profile Picture">
+        {% else %}
+          <img src="{% static 'default_pfp.jpeg' %}" alt="Default Profile Picture">
+        {% endif %}
         <p>{{ post.author }}</p>
         <h2>{{ post.title }}</h2>
         <p>{{ post.content }}</p>
