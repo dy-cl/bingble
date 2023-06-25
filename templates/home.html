@@ -118,10 +118,10 @@
   {% if user.is_authenticated %}
     <div class="profile">
       <h2>Welcome to bingble, {{ user.username }}!</h2>
-      {% if user.profile.profile_picture %}
+      {% if profile_picture %}
         <img src="{{ profile_picture.url }}" alt="Profile Picture">
       {% else %}
-        <img src="{% static 'default_pfp.jpg' %}" alt="Default Profile Picture">
+        <img src="{% static 'default_pfp.jpeg' %}" alt="Default Profile Picture">
       {% endif %}
       <a href="{% url 'profile' %}">Profile</a>
       <a href="{% url 'logout' %}">Log Out</a>

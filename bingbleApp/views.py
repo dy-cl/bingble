@@ -19,11 +19,7 @@ def home(request):
     posts = posts = Post.objects.order_by('-timestamp')  # Fetch all posts from the database
 
     user = request.user
-
-    profile_picture = None
-    if user.is_authenticated:
-        profile_picture = user.profile_picture
-
+    profile_picture = user.profile_picture
 
     context = {
         'posts': posts,
